@@ -8,7 +8,7 @@ class Player:
         self.current_room = current_room
     
     def __str__(self):
-        return f'{self.name}, our {self.role}, is in the {self.current_room}'
+        return f'{self.name.upper()}, our {self.role}, is in the {self.current_room}'
 
     def __repr__(self):
         return f'self.name = {self.name}, self.role = {self.role}, self.current_room = {self.current_room}'
