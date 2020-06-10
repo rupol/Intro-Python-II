@@ -43,16 +43,55 @@ player = {
 #
 # Main
 #
+ready_player = False
+thematic_break = r"/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\\//////\\\\\\"
 
-# Make a new player object that is currently in the 'outside' room.
-current_player = player['kinga']
-current_player.current_room = room['outside']
+# intro text
+print(thematic_break)
+print('//////////////////////////////// BOY_PROBLEMS ////////////////////////////////')
+print('                A Carly Rae Jepsen-themed heist text adventure                ')
+print(thematic_break)
+print('                          Type q to quit at any time                          ')
+
+# print all player options
+i = 1
+for key, value in player.items():
+    print(f'{i}. {value.name}, the {value.role}')
+    i += 1
+
+print(thematic_break)
+player_choice = -1
+
+# player choice
+while ready_player == False:
+    # waits for player input
+    player_choice = input('CHOOSE YOUR PLAYER (#): ')
+
+    # assign the player input to be the current player
+    try:
+        if (player_choice == 'q'):
+            break
+        if int(player_choice) == 1:
+            current_player = player['kinga']
+            ready_player = True
+        if int(player_choice) == 2:
+            current_player = player['moose']
+            ready_player = True
+        if int(player_choice) == 3:
+            current_player = player['arms']
+            ready_player = True
+        # add error handling for other options
+        # else:
+        #     print('Your selected player does not exist')
+    except ValueError:
+        print("Please enter a valid number")
+
 
 # Write a loop that:
 choice = 0
-print('Type q to quit at any time')
 
-while True:
+while ready_player == True:
+    print(thematic_break)
     # Prints the current room name
     print(current_player.current_room.name)
 
@@ -61,6 +100,8 @@ while True:
 
 
     # Waits for user input and decides what to do.
+    # print(current_player.current_room)
+    direction_options = True
     choice = input(f'Where do you want to go next? North (n), South (s), East (e) or West (w)?: ')
 
     # If the user enters a cardinal direction, attempt to move to the room there.
@@ -71,15 +112,24 @@ while True:
             break
         if choice == 'n' and current_player.current_room.n_to:
             current_player.current_room = current_player.current_room.n_to
+            print(thematic_break)
             print('You move north into the...')
         if choice == 's' and current_player.current_room.s_to:
             current_player.current_room = current_player.current_room.s_to
+            print(thematic_break)
             print('You move south into the...')
         if choice == 'e' and current_player.current_room.e_to:
             current_player.current_room = current_player.current_room.e_to
+            print(thematic_break)
             print('You move east into the...')
         if choice == 'w' and current_player.current_room.w_to:
             current_player.current_room = current_player.current_room.w_to
+            print(thematic_break)
             print('You move west into the...')
+        # add error handling for other options
+        # else:
+        #     print(thematic_break)
+        #     print('Please enter a valid direction (n/s/e/w)')
     except AttributeError:
+        print(thematic_break)
         print('Please enter a valid direction (n/s/e/w)')
