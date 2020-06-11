@@ -33,9 +33,9 @@ room['treasure'].s_to = room['narrow']
 
 # Declare players
 player = {
-    'kinga': Player('Kinga D Castle', 'leader', room['overlook']),
-    'moose': Player('Y AE Spruce Moose', 'driver', room['outside']),
-    'arms': Player('Arms McDaniels', 'muscle', room['narrow']),
+    1: Player('Kinga D Castle', 'leader', room['overlook']),
+    2: Player('Y AE Spruce Moose', 'driver', room['outside']),
+    3: Player('Arms McDaniels', 'muscle', room['narrow']),
 }
 
 # print(player['kinga'])
@@ -71,20 +71,20 @@ while ready_player == False:
     try:
         if (player_choice == 'q'):
             break
-        if int(player_choice) == 1:
-            current_player = player['kinga']
+        player_choice = int(player_choice)
+        if player_choice >= 0 and player_choice < len(player.items()):
+            current_player = player[player_choice]
+            print(f'You have chosen {current_player.name}')
             ready_player = True
-        if int(player_choice) == 2:
-            current_player = player['moose']
-            ready_player = True
-        if int(player_choice) == 3:
-            current_player = player['arms']
-            ready_player = True
-        # add error handling for other options
-        # else:
-        #     print('Your selected player does not exist')
+        else:
+            print(thematic_break)
+            print('Player does not exist. Please choose a valid player #.')
+            print(thematic_break)
+
     except ValueError:
+        print(thematic_break)
         print("Please enter a valid number")
+        print(thematic_break)
 
 
 # Write a loop that:
@@ -104,32 +104,18 @@ while ready_player == True:
     direction_options = True
     choice = input(f'Where do you want to go next? North (n), South (s), East (e) or West (w)?: ')
 
-    # If the user enters a cardinal direction, attempt to move to the room there.
-    # Print an error message if the movement isn't allowed.
-    try:
-        # If the user enters "q", quit the game.
-        if (choice == 'q'):
-            break
-        if choice == 'n' and current_player.current_room.n_to:
-            current_player.current_room = current_player.current_room.n_to
+    # If the user enters "q", quit the game
+    if (choice == 'q'):
+        break
+    # If the user enters a cardinal direction, attempt to move to the room there
+    elif choice in {'n', 's', 'e', 'w'}:
+        if getattr(current_player.current_room, f'{choice}_to') is not None:
+            current_player.current_room = getattr(current_player.current_room, f'{choice}_to')
+        # Print an error message if the movement isn't allowed
+        else:
             print(thematic_break)
-            print('You move north into the...')
-        if choice == 's' and current_player.current_room.s_to:
-            current_player.current_room = current_player.current_room.s_to
-            print(thematic_break)
-            print('You move south into the...')
-        if choice == 'e' and current_player.current_room.e_to:
-            current_player.current_room = current_player.current_room.e_to
-            print(thematic_break)
-            print('You move east into the...')
-        if choice == 'w' and current_player.current_room.w_to:
-            current_player.current_room = current_player.current_room.w_to
-            print(thematic_break)
-            print('You move west into the...')
-        # add error handling for other options
-        # else:
-        #     print(thematic_break)
-        #     print('Please enter a valid direction (n/s/e/w)')
-    except AttributeError:
+            print('You can\'t move in that direction. Please try again.')
+    # Print an error message if the input isn't a valid direction
+    else:
         print(thematic_break)
         print('Please enter a valid direction (n/s/e/w)')

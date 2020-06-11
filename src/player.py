@@ -2,7 +2,7 @@
 # currently.
 class Player:
     # attributes: name, current_room
-    def __init__(self, name, role, current_room):
+    def __init__(self, name, role, current_room=None):
         self.name = name
         self.role = role
         self.current_room = current_room
