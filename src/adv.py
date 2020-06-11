@@ -1,23 +1,26 @@
 from room import Room
 from player import Player
+from item import Item
+
+# Declare all items
+sword = Item('sword', 'fit for a queen')
+cup = Item('cup', 'golden, has a little black hole in it')
+blood = Item('blood', 'warm, feels good')
 
 # Declare all the rooms
-
 room = {
     'outside':  Room("Outside Cave Entrance", "North of you, the cave mount beckons"),
 
-    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east."),
+    'foyer':    Room("Foyer", "Dim light filters in from the south. Dusty passages run north and east.", [blood]),
 
     'overlook': Room("Grand Overlook", "A steep cliff appears before you, falling into the darkness. Ahead to the north, a light flickers in the distance, but there is no way across the chasm."),
 
     'narrow':   Room("Narrow Passage", "The narrow passage bends here from west to north. The smell of gold permeates the air."),
 
-    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south."),
+    'treasure': Room("Treasure Chamber", "You've found the long-lost treasure chamber! Sadly, it has already been completely emptied by earlier adventurers. The only exit is to the south.", [sword, cup]),
 }
 
-
 # Link rooms together
-
 room['outside'].n_to = room['foyer']
 room['foyer'].s_to = room['outside']
 room['foyer'].n_to = room['overlook']
@@ -30,6 +33,7 @@ room['treasure'].s_to = room['narrow']
 # for key, value in room.items():
 #     print(value)
 
+print(room['foyer'])
 
 # Declare players
 player = {
@@ -111,6 +115,7 @@ while ready_player == True:
     elif choice in {'n', 's', 'e', 'w'}:
         if getattr(current_player.current_room, f'{choice}_to') is not None:
             current_player.current_room = getattr(current_player.current_room, f'{choice}_to')
+            print('You move to the ...')
         # Print an error message if the movement isn't allowed
         else:
             print(thematic_break)
