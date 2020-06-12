@@ -47,7 +47,7 @@ player = {
 #
 # Main
 #
-ready_player = True # should be False to start
+ready_player = False # should be False to start
 thematic_break = r"/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\/////\\\\\\\//////\\\\\\"
 
 # intro text
@@ -57,8 +57,6 @@ print('                A Carly Rae Jepsen-themed heist text adventure           
 print(thematic_break)
 print('                          Type q to quit at any time                          ')
 
-current_player = player[1]
-"""
 # print all player options
 i = 1
 for key, value in player.items():
@@ -91,7 +89,6 @@ while ready_player == False:
         print(thematic_break)
         print("Please enter a valid number")
         print(thematic_break)
-"""
 
 # Write a loop that:
 choice = 0
@@ -104,7 +101,7 @@ while ready_player == True:
     # Waits for user input and decides what to do.
     # print(current_player.current_room)
     direction_options = True
-    choice = input(f'What do you want to do? You can move n, s, e, or w OR take, or drop an item: ').split()
+    choice = input(f'What do you want to do?\n You can move n, s, e, or w OR take, or drop an item: ').split()
     if len(choice) == 1:
         choice = choice[0]
         # If the user enters "q", quit the game
@@ -120,6 +117,7 @@ while ready_player == True:
                 print(thematic_break)
                 print('You can\'t move in that direction. Please try again.')
         elif (choice == 'i' or choice == 'inventory'):
+            print(thematic_break)
             current_player.get_inventory()
         # Print an error message if the input isn't a valid direction
         else:
@@ -133,6 +131,7 @@ while ready_player == True:
                 for item in current_player.current_room.items:
                     print(item)
                     if item.name == user_item:
+                        print(thematic_break)
                         current_player.on_take(user_item)
                         current_player.current_room.items.remove(item)
                     else:
@@ -140,4 +139,10 @@ while ready_player == True:
             else:
                 print(f'Sorry, there are no items in the current room')
         elif (user_verb == "drop"):
+            print(thematic_break)
             current_player.on_drop(user_item)
+            current_player.current_room.items.append(item)
+        else:
+            print('Sorry, that command doesn\'t exist')
+    else:
+        print('Sorry, that command doesn\'t exist')
