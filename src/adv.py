@@ -96,12 +96,8 @@ choice = 0
 
 while ready_player == True:
     print(thematic_break)
-    # Prints the current room name
-    print(current_player.current_room.name)
-
-    # Prints the current description (the textwrap module might be useful here).
-    print(current_player.current_room.description)
-
+    # Prints the current room name, description, and any items (the textwrap module might be useful here).
+    print(current_player.current_room)
 
     # Waits for user input and decides what to do.
     # print(current_player.current_room)

@@ -13,12 +13,13 @@ class Room:
 
     def __str__(self):
         output = f'{self.name.upper()} - {self.description}'
-        output  += "\nYou see the following items:"
 
-        i = 1
-        for item in self.items:
-            output += f'\n {i}. {item.name} - {item.description}'
-            i +=1
+        if len(self.items) > 0:
+            output  += "\nYou see the following items:"
+            i = 1
+            for item in self.items:
+                output += f'\n {i}. {item.name} - {item.description}'
+                i +=1
         return output
 
     def __repr__(self):
